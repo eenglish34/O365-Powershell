@@ -1,5 +1,7 @@
 This script can only be run as administrator in the Microsoft Azure Active Directory Module for Windows Powershell. You can download a copy of it from here: https://azure.microsoft.com/en-us/downloads/
 
+Before running the script, please edit options 3-5 and change the example email address at the end of the line. I have mine going to an IT Security mailbox in the Junk Email folder. This is up to you where you want the quarantined emails to go to. 
+
 This script gives you 3 options for removing an email from one, multiple, or all mailboxes in O365. 
 
 The first option you have to run is option 1. This logs you into O365 and saves your credentials for which ever option you select next. 

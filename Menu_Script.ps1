@@ -108,7 +108,7 @@ $email = Read-Host "Please enter the full email address of the sender or from ad
 $email2 = Read-Host "Please enter full email address of the users mailbox to search"
 $subject = Read-Host "Please enter the subject of the email"
 $date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
-Search-Mailbox -Identity "$email2" -SearchQuery 'From:"$email"','Subject:"$subject"','Sent:"$date"' -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
+Search-Mailbox -Identity "$email2" -SearchQuery From:"$email",Subject:"$subject",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
 Write-Host “`t`tDone removing the email from a single mailbox” -Fore Green;
 pause
 MENU_HOME
@@ -123,7 +123,7 @@ $subject = Read-Host "Please enter the subject of the email"
 $date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
 Write-Host "Before running this command make sure to put your text file with the email addresses, one on each line, in c:\ and name it Users_Affected.txt"
 pause
-Get-Content c:\Users_Affected.txt | Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery '"From:$email"','"Subject:$subject"','"Sent:$date"' -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
+Get-Content c:\Users_Affected.txt | Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery From:"$email",Subject:"$subject",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
 Write-Host “`t`tDone removing the email from the list provided.” -Fore Green;
 pause
 MENU_HOME
@@ -136,7 +136,7 @@ function MENU_HOME_FIVE
 $email = Read-Host "Please enter the full email address of the sender or from address"
 $subject = Read-Host "Please enter the subject of the email"
 $date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
-Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery '"Subject:$subject"','"From:$email"','"Sent:$date"' -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
+Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery Subject:"$subject",From:"$email",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
 Write-Host “`t`tDone removing the email from all mailboxes.” -Fore Green;
 pause
 MENU_HOME

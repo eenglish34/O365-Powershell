@@ -91,8 +91,8 @@ MENU_HOME
 function MENU_HOME_TWO
 {
 $email = Read-Host "Please enter the full email address of the sender or from address"
-$dateStart = Read-Host "Please enter the start date of your search in this format mm/dd/yyyy"
-$dateEnd = Read-Host "Please enter the end date of your search in this format mm/dd/yyyy"
+$dateStart = Read-Host "Please enter the start date of your search in this format m/d/yyyy"
+$dateEnd = Read-Host "Please enter the end date of your search in this format m/d/yyyy"
 Get-MessageTrace -SenderAddress $email -StartDate $dateStart -EndDate $dateEnd | Select-Object Received, SenderAddress, RecipientAddress, Subject, Status, ToIP, FromIP, Size, MessageID, MessageTraceID | Export-Csv -Path C:\Users_Affected.csv -Encoding ascii -NoTypeInformation
 Write-Host “`t`tDone exporting to CSV. You can find the file under c:\Users_Affected.csv” -Fore Green;
 pause
@@ -107,7 +107,7 @@ function MENU_HOME_THREE
 $email = Read-Host "Please enter the full email address of the sender or from address"
 $email2 = Read-Host "Please enter full email address of the users mailbox to search"
 $subject = Read-Host "Please enter the subject of the email"
-$date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
+$date = Read-Host "Please enter the date the email was sent in this format m/d/yyyy"
 Search-Mailbox -Identity "$email2" -SearchQuery From:"$email",Subject:"$subject",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
 Write-Host “`t`tDone removing the email from a single mailbox” -Fore Green;
 pause
@@ -120,7 +120,7 @@ function MENU_HOME_FOUR
 {
 $email = Read-Host "Please enter the full email address of the sender or from address"
 $subject = Read-Host "Please enter the subject of the email"
-$date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
+$date = Read-Host "Please enter the date the email was sent in this format m/d/yyyy"
 Write-Host "Before running this command make sure to put your text file with the email addresses, one on each line, in c:\ and name it Users_Affected.txt"
 pause
 Get-Content c:\Users_Affected.txt | Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery From:"$email",Subject:"$subject",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
@@ -135,7 +135,7 @@ function MENU_HOME_FIVE
 {
 $email = Read-Host "Please enter the full email address of the sender or from address"
 $subject = Read-Host "Please enter the subject of the email"
-$date = Read-Host "Please enter the date the email was sent in this format mm/dd/yyyy"
+$date = Read-Host "Please enter the date the email was sent in this format m/d/yyyy"
 Get-Mailbox -ResultSize unlimited | Search-Mailbox -SearchQuery Subject:"$subject",From:"$email",Sent:"$date" -DeleteContent -TargetMailbox "yourtargetmailbox@example.com" -TargetFolder "Junk Email" -loglevel full
 Write-Host “`t`tDone removing the email from all mailboxes.” -Fore Green;
 pause

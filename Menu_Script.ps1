@@ -7,17 +7,17 @@
  
 Function Menu ($MenuStart, $MenuEnd, $MenuName, $MenuFunctionName, $MenuOption1, $MenuFunction1, $MenuOption2, $MenuFunction2, $MenuOption3, $MenuFunction3, $MenuOption4, $MenuFunction4, $MenuOption5, $MenuFunction5, $MenuOption6, $MenuFunction6, $MenuOption7, $MenuFunction7, $MenuOption8, $MenuFunction8, $MenuOption9, $MenuFunction9, $MenuOption10, $MenuFunction10)
 {
-        Write-Host “`n$MenuName`n” -Fore Gray;
+        Write-Host “`n$MenuName`n” -Fore Red;
         if($MenuOption1 -ne $null){Write-Host “`t`t$MenuOption1” -Fore White;}
         if($MenuOption2 -ne $null){Write-Host “`t`t$MenuOption2” -Fore White;}
         if($MenuOption3 -ne $null){Write-Host “`t`t$MenuOption3” -Fore White;}
         if($MenuOption4 -ne $null){Write-Host “`t`t$MenuOption4” -Fore White;}
         if($MenuOption5 -ne $null){Write-Host “`t`t$MenuOption5” -Fore White;}
-        if($MenuOption6 -ne $null){Write-Host “`t`t$MenuOption6” -Fore Green;}
-        if($MenuOption7 -ne $null){Write-Host “`t`t$MenuOption7” -Fore Green;}
-        if($MenuOption8 -ne $null){Write-Host “`t`t$MenuOption8” -Fore Green;}
-        if($MenuOption9 -ne $null){Write-Host “`t`t$MenuOption9” -Fore Green;}
-        if($MenuOption10 -ne $null){Write-Host “`t`t$MenuOption9” -Fore Green;}
+        if($MenuOption6 -ne $null){Write-Host “`t`t$MenuOption6” -Fore White;}
+        if($MenuOption7 -ne $null){Write-Host “`t`t$MenuOption7” -Fore White;}
+        if($MenuOption8 -ne $null){Write-Host “`t`t$MenuOption8” -Fore White;}
+        if($MenuOption9 -ne $null){Write-Host “`t`t$MenuOption9” -Fore White;}
+        if($MenuOption10 -ne $null){Write-Host “`t`t$MenuOption9” -Fore White;}
        [int]$MenuOption = Read-Host “`n`t`tPlease select an option”
             
             if(($MenuOption -lt $MenuStart) -or ($MenuOption -gt $MenuEnd))
@@ -59,7 +59,7 @@ Function Menu ($MenuStart, $MenuEnd, $MenuName, $MenuFunctionName, $MenuOption1,
  
 function MENU_HOME
 {
-Menu 1 5 "###########################################################################################################
+Menu 1 7 "###########################################################################################################
 ######################################## Email Removal Menu ###############################################
 ###########################################################################################################
 ############################## Remove Malicious Emails from O365 Mailboxes ################################
@@ -68,7 +68,7 @@ Menu 1 5 "######################################################################
 ###########################################################################################################
 !!!!!!!!Make sure you run this script as admin! If needed close and reopen this menu script as admin!!!!!!!
 ###########################################################################################################
-" MENU_HOME "1. Sign into O365 with admin account" MENU_HOME_ONE "2. Export CSV of Emails" MENU_HOME_TWO "3. Remove email from single mailbox" MENU_HOME_THREE "4. Remove email from multiple mailboxes" MENU_HOME_FOUR "5. Remove email from all mailboxes" MENU_HOME_FIVE
+" MENU_HOME "1. Sign into O365 with admin account" MENU_HOME_ONE "2. Export CSV of Emails" MENU_HOME_TWO "3. Remove email from single mailbox" MENU_HOME_THREE "4. Remove email from multiple mailboxes" MENU_HOME_FOUR "5. Remove email from all mailboxes" MENU_HOME_FIVE "6. Install AzureAD" MENU_HOME_SIX "7. Kill all active user sessions" MENU_HOME_SEVEN
 }   
  
 ###MENU_HOME_ONE
@@ -91,8 +91,8 @@ MENU_HOME
 function MENU_HOME_TWO
 {
 $email = Read-Host "Please enter the full email address of the sender or from address"
-$dateStart = Read-Host "Please enter the start date of your search in this format m/d/yyyy"
-$dateEnd = Read-Host "Please enter the end date of your search in this format m/d/yyyy"
+$dateStart = Read-Host "Please enter the start date of your search in this format mm/dd/yyyy"
+$dateEnd = Read-Host "Please enter the end date of your search in this format mm/dd/yyyy"
 Get-MessageTrace -SenderAddress $email -StartDate $dateStart -EndDate $dateEnd | Select-Object Received, SenderAddress, RecipientAddress, Subject, Status, ToIP, FromIP, Size, MessageID, MessageTraceID | Export-Csv -Path C:\Users_Affected.csv -Encoding ascii -NoTypeInformation
 Write-Host “`t`tDone exporting to CSV. You can find the file under c:\Users_Affected.csv” -Fore Green;
 pause
@@ -128,7 +128,7 @@ Write-Host “`t`tDone removing the email from the list provided.” -Fore Green
 pause
 MENU_HOME
 } 
-###MENU_HOME_FOUR
+###MENU_HOME_FIVE
 ###############################################################################################################################################################################################################################
  
 function MENU_HOME_FIVE
@@ -141,4 +141,28 @@ Write-Host “`t`tDone removing the email from all mailboxes.” -Fore Green;
 pause
 MENU_HOME
 } 
+
+###MENU_HOME_SIX
+###############################################################################################################################################################################################################################
+ 
+function MENU_HOME_SIX
+{
+Install-Module AzureAD
+Write-Host “`t`tDone Installing AzureAD” -Fore Green;
+pause
+MENU_HOME
+}   
+ 
+###MENU_HOME_SEVEN
+###############################################################################################################################################################################################################################
+ 
+function MENU_HOME_SEVEN
+{
+$user = Read-Host "Please enter the full email address of the compromised user"
+Connect-AzureAD
+Get-AzureADUser -SearchString $user | Revoke-AzureADSignedInUserAllRefreshToken
+Write-Host “`t`tDone killing all active user sessions” -Fore Green;
+pause
+MENU_HOME
+}
 MENU_HOME
